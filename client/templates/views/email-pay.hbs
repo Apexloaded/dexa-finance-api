@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            color: black;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body style="background-color: #eee; margin: 0; padding: 0;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#eee" style="background-color: #eee;">
+        <tr>
+            <td align="center">
+                <table width="500" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff" style="background-color: #fff; margin: 0 auto;">
+                    <tr>
+                        <td align="center" style="background-color: #02001e; padding: 0; margin: 0;">
+                            {{>header}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-top: 1px solid #4338ca; padding: 15px 15px 0;">
+                            <p style="margin: 0; font-size: 1.6rem; font-weight: bolder; text-align: left;">
+                                {{ title }}
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 15px 10px; border-bottom: 1px solid #4338ca;">
+                            <p style="margin: 0;">
+                                {{ sender }} sent you <b>{{ amount }} {{ tokenSymbol }}</b> through Dexapay. Log in to claim your funds.
+                            </p>
+                            <p style="font-weight: bolder; margin-bottom: 5px;">
+                                Payment Code:
+                            </p>
+                            <p style="margin: 0; font-size: 1.3rem; font-weight: bolder; color: #4338ca;">
+                                {{ code }}
+                            </p>
+                            <p style="margin: 0; margin-top: 5px; margin-bottom: 5px;">Use this payment code to claim your funds on Dexapay</p>
+                            <p>
+                              <a href="{{ claimUrl }}" style="background: #4338ca; color: #fff; padding: 8px 15px; display: inline-block; border-radius: 5px; font-size: 14px; text-decoration: none;">Claim funds</a>
+                          </p>
+                            <p>
+                                Don't recognize this activity? Please <a href="" style="color: #4338ca;">lock your funds</a> and contact <a href="" style="color: #4338ca;">customer support</a> immediately.
+                            </p>
+                            <p style="font-size: 13px;">
+                                <em>This is an automated email, please do not reply to it.</em>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{>footer}}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
