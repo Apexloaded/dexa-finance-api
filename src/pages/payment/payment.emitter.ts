@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { EventTypes } from 'src/enums/events.enum';
-import { PaymentClaimedEvent, PaymentSentEvent } from './events/payments.events';
+import {
+  DepositedEvent,
+  PaymentClaimedEvent,
+  PaymentSentEvent,
+  TransferEvent,
+} from './events/payments.events';
 
 @Injectable()
 export class PaymentEventEmitter {
@@ -15,5 +20,15 @@ export class PaymentEventEmitter {
   emitPaymentClaimed(payload: PaymentClaimedEvent) {
     const event = new PaymentClaimedEvent(payload);
     this.eventEmitter.emit(EventTypes.PaymentClaimed, event);
+  }
+
+  emitFundDeposit(payload: DepositedEvent) {
+    const event = new DepositedEvent(payload);
+    this.eventEmitter.emit(EventTypes.Deposited, event);
+  }
+
+  emitFundTransfer(payload: TransferEvent) {
+    const event = new TransferEvent(payload);
+    this.eventEmitter.emit(EventTypes.Transfer, event);
   }
 }

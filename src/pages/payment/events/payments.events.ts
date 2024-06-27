@@ -13,3 +13,31 @@ export class PaymentSentEvent {
 }
 
 export class PaymentClaimedEvent extends PaymentSentEvent {}
+
+export class DepositedEvent {
+  from: string;
+  to: string;
+  amount: string;
+  tokenAddress: string;
+  createdAt: string;
+  constructor(payload: DepositedEvent) {
+    this.from = payload.from;
+    this.to = payload.to;
+    this.amount = payload.amount;
+    this.tokenAddress = payload.tokenAddress;
+    this.createdAt = payload.createdAt;
+  }
+}
+
+export class TransferEvent {
+  from: string;
+  to: string;
+  amount: string;
+  createdAt: string;
+  constructor(payload: TransferEvent) {
+    this.from = payload.from;
+    this.to = payload.to;
+    this.amount = payload.amount;
+    this.createdAt = payload.createdAt;
+  }
+}

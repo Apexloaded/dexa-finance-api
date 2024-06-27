@@ -52,7 +52,7 @@ export class EmailService {
       template: 'email-pay',
       context: {
         title: `${tokenSymbol} Deposit Successful`,
-        claimUrl: `https://localhost:3000/claim/${encodedUrl}`,
+        claimUrl: `https://www.dexapay.xyz/claim/${encodedUrl}`,
         code: paymentId.toUpperCase(),
         sender,
         amount,

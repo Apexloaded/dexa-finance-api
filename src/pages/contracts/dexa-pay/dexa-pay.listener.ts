@@ -39,6 +39,7 @@ export class DexaPayListener implements OnModuleInit {
   private listener() {
     this.listenToPaymentClaim();
     this.listenToPaymentSent();
+    this.listenToDeposit();
   }
 
   listenToPaymentSent() {
@@ -77,6 +78,41 @@ export class DexaPayListener implements OnModuleInit {
           event.removeListener();
         },
       );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  listenToDeposit() {
+    try {
+      this.contract.on(this.filter.Deposit(), (event: ContractEventPayload) => {
+        const { args } = event;
+        this.pmEvent.emitFundDeposit({
+          from: args[0],
+          to: args[1],
+          amount: args[2],
+          tokenAddress: args[3],
+          createdAt: args[4],
+        });
+        event.removeListener();
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  listenToTransferEvent() {
+    try {
+      this.contract.on(this.filter.Transfer(), (event: ContractEventPayload) => {
+        const { args } = event;
+        this.pmEvent.emitFundTransfer({
+          from: args[0],
+          to: args[1],
+          amount: args[2],
+          createdAt: args[3],
+        });
+        event.removeListener();
+      });
     } catch (error) {
       console.log(error);
     }

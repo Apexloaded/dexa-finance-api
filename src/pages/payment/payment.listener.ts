@@ -1,10 +1,12 @@
 import { Controller } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { EventTypes } from 'src/enums/events.enum';
-import { getErrorMsg } from 'src/helpers';
+import { getErrorMsg, walletToLowercase } from 'src/helpers';
 import {
+  DepositedEvent,
   PaymentClaimedEvent,
   PaymentSentEvent,
+  TransferEvent,
 } from './events/payments.events';
 import { EmailService } from 'src/email/email.service';
 import { PaymentService } from './payment.service';
@@ -78,5 +80,27 @@ export class PaymentEventListener {
     } catch (error: any) {
       getErrorMsg(error);
     }
+  }
+
+  /**
+   * @EventListener listens to event @DepositedEvent
+   * This updates the status of the txCount
+   * @param DepositedEvent
+   */
+  @OnEvent(EventTypes.Deposited, { async: true })
+  async listenToDeposited(payload: DepositedEvent) {
+    const { from } = payload;
+    await this.authService.increaseTxCount(walletToLowercase(from));
+  }
+
+  /**
+   * @EventListener listens to event @TransferEvent
+   * This updates the status of the txCount
+   * @param TransferEvent
+   */
+  @OnEvent(EventTypes.Transfer, { async: true })
+  async listenToTransferEv(payload: TransferEvent) {
+    const { from } = payload;
+    await this.authService.increaseTxCount(walletToLowercase(from));
   }
 }

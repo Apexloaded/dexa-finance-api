@@ -4,4 +4,6 @@ export enum EventTypes {
   PaymentSent = 'paymentSent',
   PaymentClaimed = 'paymentClaimed',
   SendClaimByEmail = 'sendClaimByEmail',
+  Deposited = 'deposited',
+  Transfer = 'transfer',
 }
