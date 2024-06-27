@@ -10,6 +10,6 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
-  await app.listen(4400);
+  await app.listen(4000);
 }
 bootstrap();
