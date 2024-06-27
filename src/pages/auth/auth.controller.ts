@@ -29,6 +29,7 @@ import { Chain, baseSepolia } from 'viem/chains';
 import { EmailService } from '../../email/email.service';
 import { EmailEventEmitter } from 'src/email/email.emitter';
 import { generateToken, tokenNumeric } from 'src/helpers/generate-id';
+import { DexaPayService } from '../contracts/dexa-pay/dexa-pay.service';
 
 @Controller('auth')
 export class AuthController {
@@ -36,6 +37,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly http: HttpService,
     private readonly configService: ConfigService,
+    private readonly dexaPayService: DexaPayService,
     private emailService: EmailService,
     private emailEv: EmailEventEmitter,
   ) {}
@@ -136,18 +138,12 @@ export class AuthController {
     try {
       const { message, signature, wallet } = body;
       console.log(body);
-      const chain: any = baseSepolia;
-      const client = createPublicClient({
-        chain: chain,
-        transport: http(chain.rpcUrls.default.http[0]),
-      });
-      const isValid = await client.verifySiweMessage({
-        address: wallet,
-        message: message,
-        signature,
-      });
 
-      console.log(isValid);
+      const isValid = await this.dexaPayService.validateSignature(
+        message,
+        signature,
+        wallet,
+      );
 
       if (!isValid) throw new UnauthorizedException('Unauthorized user');
 
@@ -157,7 +153,7 @@ export class AuthController {
           wallet: walletToLowercase(wallet),
         }),
       ]);
-
+      console.log(userAuth);
       if (!userAuth || userAuth.wallet == undefined)
         throw new UnauthorizedException('Unauthorized user');
 

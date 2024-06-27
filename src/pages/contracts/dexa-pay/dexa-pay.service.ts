@@ -2,6 +2,8 @@ import { OnModuleInit, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ethers, Contract, verifyMessage } from 'ethers';
 import DexaPayAbi from './abi/dexa-pay.abi';
+import { createPublicClient, http } from 'viem';
+import { baseSepolia } from 'viem/chains';
 
 @Injectable()
 export class DexaPayService implements OnModuleInit {
@@ -9,9 +11,7 @@ export class DexaPayService implements OnModuleInit {
   private provider: ethers.JsonRpcProvider;
   private signer: ethers.Wallet;
 
-  constructor(
-    private configService: ConfigService,
-  ) {}
+  constructor(private configService: ConfigService) {}
 
   async onModuleInit() {
     this.provider = new ethers.JsonRpcProvider(
@@ -30,8 +30,22 @@ export class DexaPayService implements OnModuleInit {
     );
   }
 
-  async validateSignature(msg: string, signature: `0x${string}`) {
-    verifyMessage(msg, signature);
+  async validateSignature(
+    msg: string,
+    signature: `0x${string}`,
+    wallet: `0x${string}`,
+  ) {
+    const chain: any = baseSepolia;
+    const client = createPublicClient({
+      chain: chain,
+      transport: http(chain.rpcUrls.default.http[0]),
+    });
+    const isValid = await client.verifySiweMessage({
+      address: wallet,
+      message: msg,
+      signature,
+    });
+    return isValid;
   }
 
   async signVerifyClaimEmailFunds(

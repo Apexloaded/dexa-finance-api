@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Auth, AuthSchema } from './schemas/auth.schema';
 import { HttpModule } from '@nestjs/axios';
 import { EmailModule } from '../../email/email.module';
+import { DexaPayModule } from '../contracts/dexa-pay/dexa-pay.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { EmailModule } from '../../email/email.module';
     HttpModule,
     HttpModule,
     EmailModule,
+    DexaPayModule
   ],
   controllers: [AuthController],
   providers: [AuthService],
