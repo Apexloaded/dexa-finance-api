@@ -135,7 +135,7 @@ export class AuthController {
   async verifyNonce(@Body() body: VerifyNonceDto) {
     try {
       const { message, signature, wallet } = body;
-
+      console.log(body);
       const chain: any = baseSepolia;
       const client = createPublicClient({
         chain: chain,
