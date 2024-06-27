@@ -147,6 +147,8 @@ export class AuthController {
         signature,
       });
 
+      console.log(isValid);
+
       if (!isValid) throw new UnauthorizedException('Unauthorized user');
 
       const siweMessage = new SiweMessage(message);
