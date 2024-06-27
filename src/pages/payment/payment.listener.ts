@@ -9,12 +9,14 @@ import {
 import { EmailService } from 'src/email/email.service';
 import { PaymentService } from './payment.service';
 import { toUtf8String } from 'ethers';
+import { AuthService } from '../auth/auth.service';
 
 @Controller()
 export class PaymentEventListener {
   constructor(
     private readonly emailService: EmailService,
     private readonly pmService: PaymentService,
+    private readonly authService: AuthService,
   ) {}
   /**
    * @EventListener listens to event @PaymentSentEvent
@@ -25,7 +27,6 @@ export class PaymentEventListener {
   @OnEvent(EventTypes.PaymentSent, { async: true })
   async listenToPaymentSent(payload: PaymentSentEvent) {
     try {
-      console.log(payload);
       const recipient = toUtf8String(payload.email);
       const payId = toUtf8String(payload.paymentCode);
       const payment = await this.pmService.findOne({
@@ -47,9 +48,9 @@ export class PaymentEventListener {
           paymentId: payment.paymentId,
         };
         const email = await this.emailService.sendPayWithEmail(emailPayload);
+        await this.authService.increaseTxCount(payment.from);
       }
     } catch (error: any) {
-      console.log(error);
       getErrorMsg(error);
     }
   }

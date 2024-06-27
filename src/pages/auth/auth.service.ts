@@ -10,6 +10,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { catchError, firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { AxiosError } from 'axios';
+import { walletToLowercase } from 'src/helpers';
 
 @Injectable()
 export class AuthService {
@@ -62,5 +63,24 @@ export class AuthService {
     });
   }
 
+  async increaseTxCount(wallet: string) {
+    const auth = await this.authModel.findOne({
+      wallet: walletToLowercase(wallet),
+    });
+    const today = new Date().toISOString().split('T')[0];
+    const lastTransactionDate = auth.lastTxDate
+      ? auth.lastTxDate.toISOString().split('T')[0]
+      : null;
 
+    if (lastTransactionDate !== today) {
+      auth.txCount = 0;
+      auth.lastTxDate = new Date();
+    }
+
+    if (auth && auth.txCount < 5) {
+      auth.txCount = auth.txCount += 1;
+    }
+    
+    await auth.save();
+  }
 }

@@ -9,6 +9,7 @@ import { PaymentEventListener } from './payment.listener';
 import { DexaPayModule } from '../contracts/dexa-pay/dexa-pay.module';
 import { TwoFaModule } from '../two-fa/two-fa.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { ConfigModule } from '@nestjs/config';
     EmailModule,
     forwardRef(() => DexaPayModule),
     TwoFaModule,
-    ConfigModule
+    ConfigModule,
+    forwardRef(() => AuthModule)
   ],
   controllers: [PaymentController, PaymentEventListener],
   providers: [PaymentService, PaymentEventEmitter],
