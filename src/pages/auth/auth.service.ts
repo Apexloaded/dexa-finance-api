@@ -76,11 +76,11 @@ export class AuthService {
       auth.txCount = 0;
       auth.lastTxDate = new Date();
     }
-
+    console.log(auth);
     if (auth && auth.txCount < 5) {
       auth.txCount = auth.txCount += 1;
     }
-    
+
     await auth.save();
   }
 }

@@ -101,6 +101,7 @@ export class PaymentEventListener {
   @OnEvent(EventTypes.Transfer, { async: true })
   async listenToTransferEv(payload: TransferEvent) {
     const { from } = payload;
+    console.log(payload);
     await this.authService.increaseTxCount(walletToLowercase(from));
   }
 }
