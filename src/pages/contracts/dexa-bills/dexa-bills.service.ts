@@ -17,7 +17,7 @@ export class DexaBillsService implements OnModuleInit {
     );
 
     this.contract = new Contract(
-      this.configService.get<string>('DEXA_BILLS'),
+      this.configService.get<string>('DEXA_BILL'),
       DexaBillsAbi,
       this.provider,
     );

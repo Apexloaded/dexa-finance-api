@@ -25,6 +25,8 @@ export class CreatePaymentDto {
   senderName?: string;
 
   isRequest?: boolean;
+
+  remark?: string;
 }
 
 export class ClaimPaymentByEmailDto {

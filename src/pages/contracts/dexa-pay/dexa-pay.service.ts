@@ -38,7 +38,7 @@ export class DexaPayService implements OnModuleInit {
     const chain: any = baseSepolia;
     const client = createPublicClient({
       chain: chain,
-      transport: http(chain.rpcUrls.default.http[0]),
+      transport: http(this.configService.get<string>('BASE_TESTNET')),
     });
     const isValid = await client.verifySiweMessage({
       address: wallet,

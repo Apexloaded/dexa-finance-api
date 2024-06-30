@@ -12,6 +12,15 @@ export class PaymentSentEvent {
   }
 }
 
+export class PaymentRequestEvent extends PaymentSentEvent {
+  expiresAt: string;
+  constructor(payload: PaymentRequestEvent) {
+    super(payload);
+    this.sender = payload.sender;
+    this.expiresAt = payload.expiresAt;
+  }
+}
+
 export class PaymentClaimedEvent extends PaymentSentEvent {}
 
 export class DepositedEvent {

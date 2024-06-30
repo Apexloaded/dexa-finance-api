@@ -45,14 +45,13 @@ export class PaymentController {
     @Req() req: Request,
     @Body() createPaymentDto: CreatePaymentDto,
   ) {
-    const { senderName, recipient_email, amount, tokenSymbol } =
-      createPaymentDto;
+    const { isRequest } = createPaymentDto;
     const authUser = req['user'];
     const paymentId = generateId(6).toLowerCase();
     const payload = {
       paymentId,
       from: walletToLowercase(authUser.wallet),
-      isRequest: false,
+      isRequest: isRequest || false,
       paymentClaimHash: hexlify(toUtf8Bytes(paymentId)),
       ...createPaymentDto,
     };

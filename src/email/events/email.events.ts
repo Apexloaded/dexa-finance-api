@@ -30,3 +30,13 @@ export class SendClaimByEmail extends SendPayWithEmail {
     this.token = payload.token;
   }
 }
+
+export class SendPaymentReqEmail extends SendPayWithEmail {
+  remark: string;
+  expires: string;
+  constructor(payload: SendPaymentReqEmail) {
+    super(payload);
+    this.remark = payload.remark;
+    this.expires = payload.expires;
+  }
+}

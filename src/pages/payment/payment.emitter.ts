@@ -4,6 +4,7 @@ import { EventTypes } from 'src/enums/events.enum';
 import {
   DepositedEvent,
   PaymentClaimedEvent,
+  PaymentRequestEvent,
   PaymentSentEvent,
   TransferEvent,
 } from './events/payments.events';
@@ -30,5 +31,10 @@ export class PaymentEventEmitter {
   emitFundTransfer(payload: TransferEvent) {
     const event = new TransferEvent(payload);
     this.eventEmitter.emit(EventTypes.Transfer, event);
+  }
+
+  emitPaymentRequest(payload: PaymentRequestEvent) {
+    const event = new PaymentRequestEvent(payload);
+    this.eventEmitter.emit(EventTypes.RequestPayment, event);
   }
 }

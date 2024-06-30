@@ -35,3 +35,8 @@ export const stringifySafe = (obj: any): string => {
 };
 
 export const protocol = process.env.NODE_ENV === 'dev' ? 'http' : 'https';
+
+export const timestampToDate = (time: string | number) => {
+  const date = new Date(Number(time) * 1000);
+  return date;
+};

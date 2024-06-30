@@ -4,6 +4,7 @@ import {
   SendClaimByEmail,
   SendOtpMail,
   SendPayWithEmail,
+  SendPaymentReqEmail,
 } from './events/email.events';
 import { encodeBase64, hexlify, toUtf8Bytes } from 'ethers';
 
@@ -57,6 +58,36 @@ export class EmailService {
         sender,
         amount,
         tokenSymbol,
+      },
+    });
+  }
+
+  sendPaymentReqEmail(payload: SendPaymentReqEmail) {
+    const {
+      to,
+      sender,
+      tokenSymbol,
+      amount,
+      date,
+      paymentId,
+      remark,
+      expires,
+    } = payload;
+    const base64 = encodeBase64(hexlify(toUtf8Bytes(paymentId)));
+    const encodedUrl = encodeURIComponent(base64);
+    return this.mailService.sendMail({
+      from: '"Dexapay" <no_reply@apexloaded.com>',
+      to: to,
+      subject: `[Dexapay] Payment Request - ${date}.`,
+      template: 'request-pay',
+      context: {
+        title: ` Payment Request from ${sender}`,
+        requestUrl: `https://www.dexapay.xyz/e/${encodedUrl}`,
+        sender,
+        amount,
+        tokenSymbol,
+        remark,
+        expires,
       },
     });
   }

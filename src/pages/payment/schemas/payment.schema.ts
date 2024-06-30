@@ -46,6 +46,9 @@ export class Payment {
 
   @Prop({ default: false })
   isLinked: boolean;
+
+  @Prop()
+  remark: string;
 }
 
 export const PaymentSchema = SchemaFactory.createForClass(Payment);

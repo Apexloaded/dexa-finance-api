@@ -9,6 +9,7 @@ import {
 } from 'ethers';
 import DexaPayAbi from './abi/dexa-pay.abi';
 import { PaymentEventEmitter } from 'src/pages/payment/payment.emitter';
+import { timestampToDate } from 'src/helpers';
 
 @Injectable()
 export class DexaPayListener implements OnModuleInit {
@@ -22,18 +23,22 @@ export class DexaPayListener implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    this.ws = new ethers.WebSocketProvider(
-      this.configService.get<string>('BASE_WSS'),
-    );
+    try {
+      this.ws = new ethers.WebSocketProvider(
+        this.configService.get<string>('BASE_WSS'),
+      );
 
-    this.contract = new Contract(
-      this.configService.get<string>('DEXA_PAY'),
-      DexaPayAbi,
-      this.ws,
-    );
+      this.contract = new Contract(
+        this.configService.get<string>('DEXA_PAY'),
+        DexaPayAbi,
+        this.ws,
+      );
 
-    this.filter = this.contract.filters;
-    this.listener();
+      this.filter = this.contract.filters;
+      this.listener();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   private listener() {
@@ -41,6 +46,7 @@ export class DexaPayListener implements OnModuleInit {
     this.listenToPaymentSent();
     this.listenToDeposit();
     this.listenToTransferEvent();
+    this.listenPaymentRequest();
   }
 
   listenToPaymentSent() {
@@ -88,7 +94,6 @@ export class DexaPayListener implements OnModuleInit {
     try {
       this.contract.on(this.filter.Deposit(), (event: ContractEventPayload) => {
         const { args } = event;
-        console.log(args);
         this.pmEvent.emitFundDeposit({
           from: args[0],
           to: args[1],
@@ -98,6 +103,27 @@ export class DexaPayListener implements OnModuleInit {
         });
         event.removeListener();
       });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  listenPaymentRequest() {
+    try {
+      this.contract.on(
+        this.filter.RequestSent(),
+        (event: ContractEventPayload) => {
+          const { args } = event;
+          this.pmEvent.emitPaymentRequest({
+            paymentCode: args[0],
+            sender: args[1],
+            email: args[2],
+            amount: args[3],
+            expiresAt: timestampToDate(args[4]).toISOString(),
+          });
+          event.removeListener();
+        },
+      );
     } catch (error) {
       console.log(error);
     }

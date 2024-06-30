@@ -22,6 +22,8 @@ import { DexaBillsModule } from './pages/contracts/dexa-bills/dexa-bills.module'
 import { EmailModule } from './email/email.module';
 import { PaymentModule } from './pages/payment/payment.module';
 import { TwoFaModule } from './pages/two-fa/two-fa.module';
+import { BillModule } from './pages/bill/bill.module';
+import { EventModule } from './pages/event/event.module';
 
 @Module({
   imports: [
@@ -68,6 +70,8 @@ import { TwoFaModule } from './pages/two-fa/two-fa.module';
     EmailModule,
     PaymentModule,
     TwoFaModule,
+    BillModule,
+    EventModule
   ],
   controllers: [AppController],
   providers: [

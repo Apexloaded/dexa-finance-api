@@ -114,16 +114,17 @@ export class AuthController {
   @Get('nonce/generate')
   async generateNonce(@Query('wallet') wallet: string) {
     try {
+      console.log('wallet');
       const isEthAddr = isEthereumAddress(wallet);
       if (!isEthAddr) {
-        return new UnauthorizedException('Unauthorized access');
+        throw new UnauthorizedException('Unauthorized access');
       }
 
       const userAuth = await this.authService.findOne({
         wallet: walletToLowercase(wallet),
       });
       if (!userAuth) {
-        return new UnauthorizedException('Unauthorized access');
+        throw new UnauthorizedException('Unauthorized access');
       }
 
       return { nonce: userAuth.nonce };

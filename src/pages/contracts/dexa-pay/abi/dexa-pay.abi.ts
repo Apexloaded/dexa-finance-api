@@ -151,6 +151,43 @@ const Abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: 'bytes',
+        name: 'paymentCode',
+        type: 'bytes',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'bytes',
+        name: 'to',
+        type: 'bytes',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'expiresAt',
+        type: 'uint256',
+      },
+    ],
+    name: 'RequestSent',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: 'bytes32',
         name: 'role',
@@ -301,6 +338,19 @@ const Abi = [
   {
     inputs: [],
     name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'DEXA_BILL_ROLE',
     outputs: [
       {
         internalType: 'bytes32',
@@ -598,6 +648,11 @@ const Abi = [
           },
           {
             internalType: 'string',
+            name: 'payId',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
             name: 'email',
             type: 'string',
           },
@@ -618,6 +673,24 @@ const Abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'token',
+        type: 'address',
+      },
+      {
+        internalType: 'bytes',
+        name: 'code',
+        type: 'bytes',
+      },
+    ],
+    name: 'fulfillRequest',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -699,6 +772,11 @@ const Abi = [
           },
           {
             internalType: 'string',
+            name: 'payId',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
             name: 'email',
             type: 'string',
           },
@@ -744,12 +822,12 @@ const Abi = [
           },
           {
             internalType: 'uint256',
-            name: 'usdAmount',
+            name: 'amount',
             type: 'uint256',
           },
           {
             internalType: 'uint256',
-            name: 'amount',
+            name: 'fee',
             type: 'uint256',
           },
           {
@@ -765,6 +843,11 @@ const Abi = [
           {
             internalType: 'uint256',
             name: 'createdAt',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'expiresAt',
             type: 'uint256',
           },
           {
@@ -925,7 +1008,13 @@ const Abi = [
     type: 'function',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'dexaBill',
+        type: 'address',
+      },
+    ],
     name: 'init_roles',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -940,6 +1029,25 @@ const Abi = [
       },
     ],
     name: 'isNameFree',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'token',
+        type: 'address',
+      },
+    ],
+    name: 'isTokenEnlisted',
     outputs: [
       {
         internalType: 'bool',
@@ -997,7 +1105,7 @@ const Abi = [
       },
       {
         internalType: 'bytes',
-        name: 'paymentCode',
+        name: 'code',
         type: 'bytes',
       },
     ],
@@ -1016,6 +1124,11 @@ const Abi = [
       {
         internalType: 'string',
         name: 'displayName',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'payId',
         type: 'string',
       },
     ],
@@ -1038,6 +1151,39 @@ const Abi = [
       },
     ],
     name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'token',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bytes',
+        name: 'email',
+        type: 'bytes',
+      },
+      {
+        internalType: 'string',
+        name: 'remark',
+        type: 'string',
+      },
+      {
+        internalType: 'bytes',
+        name: 'code',
+        type: 'bytes',
+      },
+    ],
+    name: 'requestPayment',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
