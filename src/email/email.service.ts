@@ -81,8 +81,8 @@ export class EmailService {
       subject: `[Dexapay] Payment Request - ${date}.`,
       template: 'request-pay',
       context: {
-        title: ` Payment Request from ${sender}`,
-        requestUrl: `https://www.dexapay.xyz/e/${encodedUrl}`,
+        title: ` Payment Request`,
+        requestUrl: `https://www.dexapay.xyz/pay/${encodedUrl}`,
         sender,
         amount,
         tokenSymbol,

@@ -56,13 +56,13 @@ export class DexaPayListener implements OnModuleInit {
         (event: ContractEventPayload) => {
           console.log(event);
           const { args } = event;
-          this.pmEvent.emitPaymentSent({
-            paymentCode: args[0],
-            sender: args[1],
-            email: args[2],
-            amount: args[3],
-          });
-          event.removeListener();
+        //   this.pmEvent.emitPaymentSent({
+        //     paymentCode: args[0],
+        //     sender: args[1],
+        //     email: args[2],
+        //     amount: args[3],
+        //   });
+        //   event.removeListener();
         },
       );
     } catch (error) {
@@ -114,14 +114,14 @@ export class DexaPayListener implements OnModuleInit {
         this.filter.RequestSent(),
         (event: ContractEventPayload) => {
           const { args } = event;
-          this.pmEvent.emitPaymentRequest({
-            paymentCode: args[0],
-            sender: args[1],
-            email: args[2],
-            amount: args[3],
-            expiresAt: timestampToDate(args[4]).toISOString(),
-          });
-          event.removeListener();
+        //   this.pmEvent.emitPaymentRequest({
+        //     paymentCode: args[0],
+        //     sender: args[1],
+        //     email: args[2],
+        //     amount: args[3],
+        //     expiresAt: timestampToDate(args[4]).toISOString(),
+        //   });
+        //   event.removeListener();
         },
       );
     } catch (error) {
