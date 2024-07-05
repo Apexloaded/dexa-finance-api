@@ -9,6 +9,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:3000',
       'https://dexapay.xyz',
+      'https://cron-job.org'
     ],
   });
   app.useGlobalPipes(new ValidationPipe());
