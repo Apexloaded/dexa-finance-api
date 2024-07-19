@@ -24,6 +24,7 @@ import { PaymentModule } from './pages/payment/payment.module';
 import { TwoFaModule } from './pages/two-fa/two-fa.module';
 import { BillModule } from './pages/bill/bill.module';
 import { EventModule } from './pages/event/event.module';
+import { FaucetModule } from './pages/faucet/faucet.module';
 
 @Module({
   imports: [
@@ -71,7 +72,8 @@ import { EventModule } from './pages/event/event.module';
     PaymentModule,
     TwoFaModule,
     BillModule,
-    EventModule
+    EventModule,
+    FaucetModule
   ],
   controllers: [AppController],
   providers: [

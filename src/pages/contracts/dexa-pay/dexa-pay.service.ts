@@ -1,7 +1,8 @@
 import { OnModuleInit, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ethers, Contract, verifyMessage } from 'ethers';
+import { ethers, Contract, verifyMessage, parseUnits } from 'ethers';
 import DexaPayAbi from './abi/dexa-pay.abi';
+import ERC20 from './abi/ERC20.abi';
 import { createPublicClient, http } from 'viem';
 import { baseSepolia } from 'viem/chains';
 
@@ -68,5 +69,20 @@ export class DexaPayService implements OnModuleInit {
       value.paymentCode,
     );
     await tx.wait(3);
+  }
+
+  async requestFaucet(wallet: string) {
+    const tokenContract = new Contract(
+      this.configService.get<string>('BNB_TESTNET'),
+      ERC20,
+      this.signer,
+    );
+
+    const amount = parseUnits('1', 'ether');
+    const tx = await tokenContract.transfer(wallet, amount);
+    await tx.wait(3);
+    return {
+      txHash: tx.hash,
+    };
   }
 }

@@ -9,6 +9,7 @@ import {
   Body,
   NotFoundException,
   ConflictException,
+  Param,
 } from '@nestjs/common';
 import { isEthereumAddress } from 'class-validator';
 import { Response } from 'express';

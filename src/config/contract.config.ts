@@ -6,4 +6,5 @@ export default () => ({
   DEXA_BILL: process.env.DEXA_BILL,
   ADMIN_WALLET: process.env.ADMIN_WALLET,
   ADMIN_PRIVATE: process.env.ADMIN_PRIVATE,
+  BNB_TESTNET: process.env.BNB_TESTNET,
 });
