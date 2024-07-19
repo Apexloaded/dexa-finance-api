@@ -78,9 +78,8 @@ export class DexaPayService implements OnModuleInit {
       this.signer,
     );
 
-    const amount = parseUnits('1', 'ether');
+    const amount = parseUnits('10', 'ether');
     const tx = await tokenContract.transfer(wallet, amount);
-    await tx.wait(3);
     return {
       txHash: tx.hash,
     };
