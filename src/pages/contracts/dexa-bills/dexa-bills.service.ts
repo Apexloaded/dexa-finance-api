@@ -13,11 +13,11 @@ export class DexaBillsService implements OnModuleInit {
 
   async onModuleInit() {
     this.provider = new ethers.JsonRpcProvider(
-      this.configService.get<string>('BASE_TESTNET'),
+      this.configService.get<string>('BSC_TESTNET'),
     );
 
     this.contract = new Contract(
-      this.configService.get<string>('DEXA_BILL'),
+      this.configService.get<string>('DEXA_BILLPOINT'),
       DexaBillsAbi,
       this.provider,
     );

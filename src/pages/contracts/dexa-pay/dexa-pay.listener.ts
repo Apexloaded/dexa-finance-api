@@ -25,11 +25,11 @@ export class DexaPayListener implements OnModuleInit {
   async onModuleInit() {
     try {
       this.ws = new ethers.WebSocketProvider(
-        this.configService.get<string>('BASE_WSS'),
+        this.configService.get<string>('BSC_TESTNET_WSS'),
       );
 
       this.contract = new Contract(
-        this.configService.get<string>('DEXA_PAY'),
+        this.configService.get<string>('DEXA_GATEWAY'),
         DexaPayAbi,
         this.ws,
       );

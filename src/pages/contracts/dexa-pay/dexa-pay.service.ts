@@ -16,7 +16,7 @@ export class DexaPayService implements OnModuleInit {
 
   async onModuleInit() {
     this.provider = new ethers.JsonRpcProvider(
-      this.configService.get<string>('BASE_TESTNET'),
+      this.configService.get<string>('BSC_TESTNET'),
     );
 
     this.signer = new ethers.Wallet(
@@ -25,7 +25,7 @@ export class DexaPayService implements OnModuleInit {
     );
 
     this.contract = new Contract(
-      this.configService.get<string>('DEXA_PAY'),
+      this.configService.get<string>('DEXA_GATEWAY'),
       DexaPayAbi,
       this.signer,
     );
@@ -39,7 +39,7 @@ export class DexaPayService implements OnModuleInit {
     const chain: any = baseSepolia;
     const client = createPublicClient({
       chain: chain,
-      transport: http(this.configService.get<string>('BASE_TESTNET')),
+      transport: http(this.configService.get<string>('BSC_TESTNET')),
     });
     const isValid = await client.verifySiweMessage({
       address: wallet,
