@@ -5,17 +5,21 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { EmailEventEmitter } from './email.emitter';
 import { EmailEventListener } from './email.listener';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     MailerModule.forRootAsync({
-      useFactory: () => {
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
         const path = join(__dirname, '../..', 'client', 'templates');
+        const email = configService.get<string>('SMTP_EMAIL');
+        const password = configService.get<string>('SMTP_PASSWORD');
+        const host = configService.get<string>('SMTP_HOST');
         return {
-          transport:
-            'smtps://no_reply@apexloaded.com:_No1Repl.yM@smtppro.zoho.com',
+          transport: `smtps://${email}:${password}@${host}`,
           defaults: {
-            from: '"Dexapay" <no_reply@apexloaded.com>',
+            from: `"Dexa Finance" <${email}>`,
           },
           template: {
             dir: join(path, 'views'),
@@ -34,6 +38,7 @@ import { EmailEventListener } from './email.listener';
           },
         };
       },
+      inject: [ConfigService],
     }),
   ],
   controllers: [EmailEventListener],
