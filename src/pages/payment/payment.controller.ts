@@ -196,7 +196,7 @@ export class PaymentController {
       name: 'DexaFi',
       version: '1',
       chainId: bscTestnet.id,
-      verifyingContract: this.configService.get<string>('DEXA_PAY'),
+      verifyingContract: this.configService.get<string>('DEXA_GATEWAY'),
     };
 
     const data = {
