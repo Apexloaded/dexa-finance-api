@@ -26,7 +26,7 @@ import { Public } from 'src/decorators/public.decorator';
 import { generateToken, tokenNumeric } from 'src/helpers/generate-id';
 import { TwoFaService } from '../two-fa/two-fa.service';
 import * as moment from 'moment';
-import { baseSepolia } from 'viem/chains';
+import { bscTestnet } from 'viem/chains';
 import { ConfigService } from '@nestjs/config';
 import { DexaPayService } from '../contracts/dexa-pay/dexa-pay.service';
 
@@ -196,7 +196,7 @@ export class PaymentController {
     const domain = {
       name: 'DexaPay',
       version: '1',
-      chainId: baseSepolia.id,
+      chainId: bscTestnet.id,
       verifyingContract: this.configService.get<string>('DEXA_PAY'),
     };
 
