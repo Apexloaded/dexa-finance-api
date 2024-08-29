@@ -66,7 +66,6 @@ export class PaymentController {
     @Req() req: Request,
     @Body() body: ClaimPaymentByEmailDto,
   ) {
-    console.log(body);
     const { email, paymentCode, ownerAddress } = body;
     const payment = await this.paymentService.findOne({
       paymentId: paymentCode.toLowerCase(),
@@ -194,7 +193,7 @@ export class PaymentController {
     const emailHash = hexlify(toUtf8Bytes(payment.recipient_email));
 
     const domain = {
-      name: 'DexaPay',
+      name: 'DexaFi',
       version: '1',
       chainId: bscTestnet.id,
       verifyingContract: this.configService.get<string>('DEXA_PAY'),

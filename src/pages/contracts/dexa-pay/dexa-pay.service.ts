@@ -4,7 +4,7 @@ import { ethers, Contract, verifyMessage, parseUnits } from 'ethers';
 import DexaPayAbi from './abi/dexa-pay.abi';
 import ERC20 from './abi/ERC20.abi';
 import { createPublicClient, http } from 'viem';
-import { baseSepolia } from 'viem/chains';
+import { bscTestnet } from 'viem/chains';
 
 @Injectable()
 export class DexaPayService implements OnModuleInit {
@@ -36,7 +36,7 @@ export class DexaPayService implements OnModuleInit {
     signature: `0x${string}`,
     wallet: `0x${string}`,
   ) {
-    const chain: any = baseSepolia;
+    const chain: any = bscTestnet;
     const client = createPublicClient({
       chain: chain,
       transport: http(this.configService.get<string>('BSC_TESTNET')),
