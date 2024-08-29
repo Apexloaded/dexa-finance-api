@@ -53,7 +53,7 @@ export class EmailService {
       template: 'email-pay',
       context: {
         title: `${tokenSymbol} Deposit Successful`,
-        claimUrl: `https://www.dexapay.xyz/claim/${encodedUrl}`,
+        claimUrl: `https://www.dexafi.xyz/claim/${encodedUrl}`,
         code: paymentId.toUpperCase(),
         sender,
         amount,
@@ -82,7 +82,7 @@ export class EmailService {
       template: 'request-pay',
       context: {
         title: ` Payment Request`,
-        requestUrl: `https://www.dexapay.xyz/pay/${encodedUrl}`,
+        requestUrl: `https://www.dexafi.xyz/pay/${encodedUrl}`,
         sender,
         amount,
         tokenSymbol,
